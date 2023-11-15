@@ -1,0 +1,104 @@
+@charset "UTF-8";
+.main {
+  background-color: rgb(245, 245, 245);
+  width: 70%;
+  margin: auto;
+  margin-top: 7%;
+  margin-bottom: 7%;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  z-index: 1000;
+  padding-left: 2%;
+}
+.main h1 {
+  margin-bottom: 5%;
+  margin-left: 2%;
+  margin-top: 1%;
+  font-size: 2.5rem;
+}
+
+.tr {
+  margin-bottom: 10v;
+  height: 10vh;
+  border-bottom: 1px solid #ccc !important;
+  margin-bottom: 10px; /* 適切なマージンを追加して間隔を調整 */
+}
+
+.th {
+  text-align: left;
+}
+.th span {
+  color: red;
+}
+
+.td {
+  text-align: left;
+  width: 70%;
+}
+.td .inputT {
+  height: 4vh;
+  width: 50%;
+  font-size: 2rem;
+}
+.td .inputN {
+  height: 4vh;
+  width: 10%;
+  font-size: 2rem;
+}
+
+.vertical {
+  display: flex;
+  flex-direction: column;
+}
+
+.table {
+  margin: auto;
+  width: 80%;
+  font-size: 1.5rem;
+}
+
+.h2A {
+  position: relative;
+  color: #333;
+  text-shadow: 0 0 2px white;
+  z-index: 2;
+  margin-left: 50px;
+  margin-bottom: 1%;
+  font-size: 2rem;
+}
+.h2A::before {
+  content: "";
+  position: absolute;
+  background: #9de5ff;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  top: 50%;
+  left: -20px;
+  transform: translateY(-50%);
+  z-index: -1;
+}
+
+.h2B {
+  position: relative;
+  color: #333;
+  text-shadow: 0 0 2px white;
+  z-index: 2;
+  margin-left: 50px;
+  margin-bottom: 1%;
+  margin-top: 3%;
+  font-size: 2rem;
+}
+.h2B::before {
+  content: "";
+  position: absolute;
+  background: #ebff79;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  top: 50%;
+  /* border: dashed 1px white; */
+  left: -20px;
+  transform: translateY(-50%);
+  z-index: -1;
+}/*# sourceMappingURL=Registry.module.css.map */

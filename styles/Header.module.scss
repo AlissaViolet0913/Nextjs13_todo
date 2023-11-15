@@ -1,0 +1,141 @@
+$cBlack: black;
+$cWhite: white;
+
+// hamburgerMenu
+.hamburgerMenu {
+  background-color: transparent;
+  cursor: pointer;
+  margin-left: auto; //icon右寄せ
+  margin-right: 3vh;
+  margin-top: 0.5vh;
+
+  & > span {
+    background-color: $cWhite;
+    width: 40px;
+    height: 3.5px;
+    display: block; // span要素がインライン要素だから、縦と横を設定するのにdisplayをblockもしくはinline-blockに設定する
+    margin-bottom: 9px;
+    transition: transform 0.5s;
+    border-radius: 4px;
+
+    // 最後の子要素だけmargin-bottomを無くす
+    &:last-child {
+      margin-bottom: 0.1s;
+    }
+  }
+}
+// hamburgerメニューがクリックされたときに適用させるCSS
+.menuOpen {
+    background-color: $cBlack;
+    animation-name:fadeInAnime;
+    animation-duration:0.5s;
+    animation-fill-mode:forwards;
+    opacity:0;
+
+    @keyframes fadeInAnime{
+      from {
+        opacity: 0;
+      }
+    
+      to {
+        opacity: 1;
+      }
+    }
+  
+    // menuOpenが付いているときのhamburgerMenu
+    & .hamburgerMenu {
+      & > span {
+        background-color: $cWhite;
+  
+        &:nth-child(1) {
+          transform: translateY(15px) rotate(138deg);
+        }
+        &:nth-child(2) {
+          background-color: black;
+        }
+        &:nth-child(3) {
+          // 反時計回りに135度
+          transform: translateY(-9px) rotate(-138deg);
+        }
+      }
+    }
+  }
+
+  .Header{
+    background-color: $cBlack;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    height: 11vh;
+    text-align: center;
+    // header画面上部固定
+    position: fixed;
+    width: 100%;
+  }
+
+  .nav{
+    top: 0;
+    right: -300vw;
+    width: 70%;
+    max-width: 400px;
+    height: 70vh;
+    display: block;
+    position: fixed;
+    align-items: center;
+    background-color: $cBlack;
+    transition: ease 0.5s;
+    margin-top: 11vh;
+
+
+    & > ul{
+      margin: 0;
+      padding: 0;
+    }
+
+    ul li{
+      list-style: none;
+      margin: 0;
+      padding: 2.5rem;
+
+      &:hover{
+        background-color: rgb(70, 70, 70, 0.5);
+      }
+
+      &:nth-child(1){
+        font-size: 1.5rem;
+        background-color: rgba(39, 38, 38, 0.5);
+
+        &:hover{
+          background-color: rgb(70, 70, 70, 0.5);
+
+        }
+      }
+
+      a{
+        color: $cWhite;
+      }
+    }
+  }
+
+  .open{
+    right:0;
+    opacity: 1;
+  }
+
+  .login{
+    width: 4.5vh;
+    height: 4.5vh;
+    margin: 1vh;
+  }
+  
+  .loginIcon{
+    cursor: pointer;
+    margin-left: 90%;
+  }
+
+
+.link{
+  text-decoration: none;
+  color: white;
+}

@@ -1,0 +1,126 @@
+.main{
+    // align-items: center;　//垂直方向
+    // text-align: center; // 水平方向
+    background-color: rgb(245, 245, 245);
+    width: 70%;
+    margin: auto;
+    margin-top: 7%;
+    margin-bottom: 7%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    z-index: 1000;
+    padding-left: 2%;
+
+    h1{
+        margin-bottom: 5%;
+        margin-left: 2%;
+        margin-top: 1%;
+        font-size: 2.5rem;
+    }
+}
+
+.userInfo{
+    // background-color: rgb(0, 255, 153);
+}
+
+.PhysicalInfo{
+    // background-color: blue;
+}
+
+.tr{
+    margin-bottom: 10v;
+    height: 10vh;
+    border-bottom: 1px solid #ccc !important;
+    margin-bottom: 10px; /* 適切なマージンを追加して間隔を調整 */
+}
+
+.th{
+    text-align: left; //リストの項目を文字を左寄せ
+
+    span{
+        color: red;
+    }
+}
+
+
+.td{
+    text-align: left;
+    width: 70%;
+
+    .inputT{
+        height: 4vh;
+        width: 50%;
+        font-size: 2rem;
+    }
+
+    .inputN{
+        height: 4vh;
+        width: 10%;
+        font-size: 2rem;
+    }
+}
+
+.vertical{
+    // radioボタンを立て並び
+    display: flex;
+    flex-direction: column;
+}
+
+.table{
+    margin: auto;
+    width: 80%;
+    font-size: 1.5rem;
+
+}
+
+.h2A{
+    position: relative;
+    color: #333;
+    text-shadow: 0 0 2px white;
+    z-index: 2;
+    margin-left: 50px;
+    margin-bottom: 1%;
+    font-size: 2rem;
+
+
+  &::before{
+    content: "";
+  position: absolute;
+  background: #9de5ff;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  top: 50%;
+  left: -20px;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  z-index: -1;
+  }
+}
+
+.h2B{
+    position: relative;
+    color: #333;
+    text-shadow: 0 0 2px white;
+    z-index: 2;
+    margin-left: 50px;
+    margin-bottom: 1%;
+    margin-top: 3%;
+    font-size: 2rem;
+
+
+  &::before{
+    content: "";
+  position: absolute;
+  background: #ebff79;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  top: 50%;
+  /* border: dashed 1px white; */
+  left: -20px;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  z-index: -1;
+  }
+}

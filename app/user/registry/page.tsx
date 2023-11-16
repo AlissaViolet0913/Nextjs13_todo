@@ -12,6 +12,10 @@ export const metadata: Metadata = {
 };
 
 
+const submit =()=>{
+
+}
+
 function Registry() {
   return (
     <div>
@@ -31,15 +35,14 @@ function Registry() {
                   ユーザーネーム<span className={styles.span}>※</span>
                 </th>
                 <td className={styles.td}>
-                  <input type="text" className={styles.inputT}/>
-                </td>
+                  <input type="text" id="name" placeholder="健康管理" className={styles.inputT}/>                </td>
               </tr>
               <tr className={styles.tr}>
                 <th className={styles.th}>
                   Email<span className={styles.span}>※</span>
                 </th>
                 <td className={styles.td}>
-                  <input type="email" name="email" id="email" placeholder='XXX@nurtrition.com' className={styles.inputT}/>
+                  <input type="email" name="email" id="email" placeholder='XXX@nurtrition.com' maxLength={256} className={styles.inputT}/>
                 </td>
               </tr>
               <tr className={styles.tr}>
@@ -47,7 +50,8 @@ function Registry() {
                 パスワード<span className={styles.span}>※</span>
                 </th>
                 <td className={styles.td}>
-                  <input type="password" name="password" id="password" placeholder='********' className={styles.inputT}/>
+                  <input type="password" name="password" id="password" placeholder='********' maxLength={16} minLength={8} className={styles.inputT}/>
+                  <p>半角英字、数字を含めて8文字以上16字以内で設定してください</p>
                 </td>
               </tr>
               <tr className={styles.tr}>
@@ -55,7 +59,9 @@ function Registry() {
                 確認パスワード<span className={styles.span}>※</span>
                 </th>
                 <td className={styles.td}>
-                  <input type="password" name="passwordConfirmation" id="passwordConfirmation" placeholder='********' className={styles.inputT}/>
+                  <input type="password" name="passwordConfirmation" id="passwordConfirmation" placeholder='********' maxLength={16} minLength={8} className={styles.inputT}/>
+                  <p>入力したパスワードと同じものを入力してください
+                  </p>
                 </td>
               </tr>
             </tbody>
@@ -70,7 +76,7 @@ function Registry() {
                   身長
                 </th>
                 <td className={styles.td}>
-                  <input type="number" name="height" id="height" placeholder='158' className={styles.inputN}/>cm
+                  <input type="text" name="height" id="height" placeholder='158' maxLength={3} minLength={2} className={styles.inputN}/>cm
                 </td>
               </tr>
               <tr className={styles.tr}>
@@ -78,7 +84,7 @@ function Registry() {
                   体重
                 </th>
                 <td className={styles.td}>
-                  <input type="number" name="weight" id="weight" placeholder='48' className={styles.inputN}/>kg
+                  <input type="text" name="weight" id="weight" placeholder='48' maxLength={3} minLength={2} className={styles.inputN}/>kg
                 </td>
               </tr>
               <tr className={styles.tr}>
@@ -86,7 +92,7 @@ function Registry() {
                   生年月日
                 </th>
                 <td className={styles.td}>
-                  <input type="date" name="age" id="age" className={styles.inputT}/>
+                  <input type="text" name="age" id="age" placeholder='19990625' maxLength={8} minLength={8} className={styles.inputT}/>
                 </td>
               </tr>
               <tr className={styles.tr}>
@@ -95,17 +101,19 @@ function Registry() {
                 </th>
                 <td className={styles.td}>
                   <div className={styles.vertical}>
-                  <div className="male">
-                  <input type="radio" name="male" id="male" />男性
-                  </div>
-                  <div className="female">
-                  <input type="radio" name="female" id="female" />女性
-                  </div>
+                    {/* name="gender"を設定することでどちらかしか選択できないようにする */}
+                    <label htmlFor="male">
+                      <input type="radio" name="gender" id="male" checked/>男性
+                    </label>
+                    <label htmlFor="female">
+                      <input type="radio" name="gender" id="female" />女性
+                    </label>
                   </div>
                 </td>
               </tr>
             </tbody>
             </table>
+            <button className={styles.btn} >登録する</button>
         </div>
       </div>
     </div>

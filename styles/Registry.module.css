@@ -1,20 +1,28 @@
 @charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=BIZ+UDPGothic&family=M+PLUS+1p:wght@300;400&family=Noto+Serif+JP:wght@300&family=Poppins:wght@100&family=Zen+Kaku+Gothic+New:wght@300;400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=BIZ+UDPGothic&family=M+PLUS+1p:wght@300;400&family=Noto+Serif+JP:wght@300&family=Poppins:wght@100&family=Zen+Kaku+Gothic+New&display=swap");
 .main {
+  text-align: center;
   background-color: rgb(245, 245, 245);
   width: 70%;
   margin: auto;
-  margin-top: 7%;
+  margin-top: 4%;
   margin-bottom: 7%;
   padding-top: 2%;
   padding-bottom: 2%;
   z-index: 1000;
   padding-left: 2%;
+  font-family: "BIZ UDPGothic", sans-serif;
 }
 .main h1 {
   margin-bottom: 5%;
   margin-left: 2%;
   margin-top: 1%;
   font-size: 2.5rem;
+  text-align: left;
+}
+.main h2 {
+  text-align: left;
 }
 
 .tr {
@@ -38,17 +46,90 @@
 .td .inputT {
   height: 4vh;
   width: 50%;
-  font-size: 2rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding-left: 1em;
+  padding-right: 1em;
+  background: rgb(251, 251, 251);
+  font-size: 22px;
+}
+.td .inputT:hover {
+  border: 2px solid rgb(67, 67, 67);
+}
+.td .inputT:focus {
+  outline: 3px solid rgb(64, 167, 198);
+  border: none;
 }
 .td .inputN {
   height: 4vh;
   width: 10%;
-  font-size: 2rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding-left: 1em;
+  padding-right: 1em;
+  background: rgb(251, 251, 251);
+  font-size: 22px;
+  margin-right: 1.5%;
+}
+.td .inputN:hover {
+  border: 2px solid rgb(67, 67, 67);
+}
+.td .inputN:focus {
+  outline: 3px solid rgb(64, 167, 198);
+  border: none;
+}
+.td p {
+  font-size: 18px;
+  margin-top: 1%;
 }
 
 .vertical {
   display: flex;
   flex-direction: column;
+}
+.vertical label {
+  display: flex;
+  align-items: center;
+  gap: 0 0.5em;
+  position: relative;
+  cursor: pointer;
+}
+.vertical label::before, .vertical label:has(:checked)::after {
+  border-radius: 3px;
+  content: "";
+}
+.vertical label::before {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #dee5eb;
+  box-sizing: border-box;
+}
+.vertical label::after {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  background-color: #dee5eb;
+}
+.vertical label:has(:checked)::after {
+  background-color: #2589d0;
+  animation: anim-radio-002 0.3s linear;
+}
+@keyframes anim-radio-002 {
+  0% {
+    box-shadow: 0 0 0 1px transparent;
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(37, 137, 208, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 0 10px transparent;
+  }
+}
+.vertical label input {
+  display: none;
 }
 
 .table {
@@ -101,4 +182,21 @@
   left: -20px;
   transform: translateY(-50%);
   z-index: -1;
+}
+
+.btn {
+  background-color: black;
+  color: white;
+  outline: none;
+  border: none;
+  margin-top: 7%;
+  margin-bottom: 3%;
+  width: 30%;
+  height: 6vh;
+  font-size: 1.5rem;
+  font-family: "BIZ UDPGothic", sans-serif;
+  transition: all 0.3s;
+}
+.btn:hover {
+  background-color: rgb(46, 46, 46);
 }/*# sourceMappingURL=Registry.module.css.map */

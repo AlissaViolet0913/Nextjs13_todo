@@ -1,18 +1,27 @@
 @charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=BIZ+UDPGothic&family=M+PLUS+1p:wght@300;400&family=Noto+Serif+JP:wght@300&family=Poppins:wght@100&family=Zen+Kaku+Gothic+New:wght@300;400&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=BIZ+UDPGothic&family=M+PLUS+1p:wght@300;400&family=Noto+Serif+JP:wght@300&family=Poppins:wght@100&family=Zen+Kaku+Gothic+New&display=swap");
+.bg {
+  background-image: url("../public/bg.png");
+  margin-top: 0;
+  background-size: cover;
+  background-attachment: fixed;
+  padding-top: 4%;
+  padding-bottom: 7%;
+}
+
 .main {
   text-align: center;
-  background-color: rgb(245, 245, 245);
-  width: 70%;
+  background-color: rgb(238, 238, 238);
+  width: 50%;
   margin: auto;
-  margin-top: 4%;
-  margin-bottom: 7%;
   padding-top: 2%;
   padding-bottom: 2%;
   z-index: 1000;
   padding-left: 2%;
   font-family: "BIZ UDPGothic", sans-serif;
+  border-radius: 4px;
+  color: rgb(60, 60, 60);
 }
 .main h1 {
   margin-bottom: 5%;
@@ -23,12 +32,34 @@
 }
 .main h2 {
   text-align: left;
+  position: relative;
+  color: black;
+  margin-left: 50px;
+  margin-bottom: 1%;
+  font-size: 2rem;
+}
+.main h2 span {
+  background: linear-gradient(transparent 60%, rgba(255, 0, 0, 0.9) 60%);
+}
+.main p {
+  color: rgb(183, 183, 183);
+}
+
+.h2B {
+  margin-top: 5%;
+}
+
+.PhyP {
+  text-align: left;
+  margin-left: 7%;
+  margin-bottom: 3%;
+  font-size: 18px;
 }
 
 .tr {
   margin-bottom: 10v;
   height: 10vh;
-  border-bottom: 1px solid #ccc !important;
+  border: 1px solid #cecece !important;
   margin-bottom: 10px; /* 適切なマージンを追加して間隔を調整 */
 }
 
@@ -37,6 +68,7 @@
 }
 .th span {
   color: red;
+  margin-left: 1%;
 }
 
 .td {
@@ -46,36 +78,38 @@
 .td .inputT {
   height: 4vh;
   width: 50%;
-  border: 1px solid #ddd;
+  background-color: .td .inputT white;
+  border: 1px solid rgb(67, 67, 67);
   border-radius: 6px;
   padding-left: 1em;
   padding-right: 1em;
-  background: rgb(251, 251, 251);
   font-size: 22px;
+  color: black;
 }
 .td .inputT:hover {
-  border: 2px solid rgb(67, 67, 67);
+  border: 2px solid rgb(134, 132, 132);
 }
 .td .inputT:focus {
-  outline: 3px solid rgb(64, 167, 198);
+  outline: 4px solid rgb(103, 103, 103);
   border: none;
 }
 .td .inputN {
   height: 4vh;
-  width: 10%;
-  border: 1px solid #ddd;
+  width: 15%;
+  background-color: .td .inputN white;
+  border: 1px solid rgb(67, 67, 67);
   border-radius: 6px;
   padding-left: 1em;
   padding-right: 1em;
-  background: rgb(251, 251, 251);
   font-size: 22px;
   margin-right: 1.5%;
+  color: black;
 }
 .td .inputN:hover {
-  border: 2px solid rgb(67, 67, 67);
+  border: 2px solid rgb(134, 132, 132);
 }
 .td .inputN:focus {
-  outline: 3px solid rgb(64, 167, 198);
+  outline: 4px solid rgb(103, 103, 103);
   border: none;
 }
 .td p {
@@ -101,7 +135,7 @@
 .vertical label::before {
   width: 20px;
   height: 20px;
-  border: 2px solid #dee5eb;
+  border: 2px solid rgb(98, 98, 98);
   box-sizing: border-box;
 }
 .vertical label::after {
@@ -111,10 +145,10 @@
   transform: translate(-50%, -50%);
   width: 12px;
   height: 12px;
-  background-color: #dee5eb;
+  background-color: rgb(98, 98, 98);
 }
 .vertical label:has(:checked)::after {
-  background-color: #2589d0;
+  background-color: red;
   animation: anim-radio-002 0.3s linear;
 }
 @keyframes anim-radio-002 {
@@ -122,7 +156,7 @@
     box-shadow: 0 0 0 1px transparent;
   }
   50% {
-    box-shadow: 0 0 0 10px rgba(37, 137, 208, 0.2);
+    box-shadow: 0 0 0 10px rgba(208, 37, 37, 0.2);
   }
   100% {
     box-shadow: 0 0 0 10px transparent;
@@ -138,57 +172,12 @@
   font-size: 1.5rem;
 }
 
-.h2A {
-  position: relative;
-  color: #333;
-  text-shadow: 0 0 2px white;
-  z-index: 2;
-  margin-left: 50px;
-  margin-bottom: 1%;
-  font-size: 2rem;
-}
-.h2A::before {
-  content: "";
-  position: absolute;
-  background: #9de5ff;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  top: 50%;
-  left: -20px;
-  transform: translateY(-50%);
-  z-index: -1;
-}
-
-.h2B {
-  position: relative;
-  color: #333;
-  text-shadow: 0 0 2px white;
-  z-index: 2;
-  margin-left: 50px;
-  margin-bottom: 1%;
-  margin-top: 3%;
-  font-size: 2rem;
-}
-.h2B::before {
-  content: "";
-  position: absolute;
-  background: #ebff79;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  top: 50%;
-  /* border: dashed 1px white; */
-  left: -20px;
-  transform: translateY(-50%);
-  z-index: -1;
-}
-
 .btn {
+  cursor: pointer;
   background-color: black;
   color: white;
   outline: none;
-  border: none;
+  border: solid white;
   margin-top: 7%;
   margin-bottom: 3%;
   width: 30%;
@@ -198,5 +187,14 @@
   transition: all 0.3s;
 }
 .btn:hover {
-  background-color: rgb(46, 46, 46);
+  background-color: rgb(247, 244, 244);
+  border: solid black;
+  color: black;
+}
+
+.passwordVisible {
+  cursor: pointer;
+  width: 7%;
+  height: 4vh;
+  margin-left: 2%;
 }/*# sourceMappingURL=Registry.module.css.map */

@@ -3,11 +3,11 @@
 import React, { useEffect, useState } from 'react'
 import styles from '../../../styles/Registry.module.css';
 import { supabase } from "../../api/supabase.js"
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 
 function Registry() {
   const [displayPassword, setDisplayPassword] = useState(false);
-  const [error, setError] = useState('');
+  const [emailError, setEmailError] = useState("");
   const [usersMail, setUsersMail] = useState([]);
 
 
@@ -38,41 +38,53 @@ function Registry() {
   
   // 新規会員登録
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // フォームのデフォルトの送信を防ぐ
-    const router = useRouter();
-
+    e.preventDefault(); // デフォルトのフォームの送信を防ぐ
+    // const router = useRouter(); 
+  
     try {
       const formData = new FormData(e.currentTarget);
+      // inputタグのname属性を参照している
       const sendData = {
-        email: formData.get('email'), // フォームの各要素に対応するname属性を指定して取得
-        // 他のフォームデータの取得も同様に行う
+        email: formData.get('email'),
+        name: formData.get('name'),
+        password: formData.get('password'),
+        passwordConfirmation: formData.get('passwordConfirmation'),
+        gender: formData.get('gender'),
+        height: formData.get('height') || null,
+        weight: formData.get('weight') || null,
+        birthday: formData.get('birthday'),
       };
-      
-      // Check if the email is already in use
+      console.log(sendData)
+  
       const { data: users, error: usersError } = await supabase.from("users").select('email');
+
+
       if (usersError) {
         console.log(usersError, "データ取得に失敗しました");
-        return; // Exit the function early if there's an error
+        return;
+      }else{
+        const existingEmails = users.map((user) => user.email);
+        if (existingEmails.includes(sendData.email)) {
+          setEmailError('このメールアドレスは既に使用されています。別のメールアドレスを入力してください。');
+          return;
+        }else{
+          const { error: registrationError } = await supabase.from("users").insert(sendData);
+          if (registrationError) {
+            console.log(registrationError, "insertエラー");
+          } else {
+            console.log("データ登録完了")
+          }
+        }   
       }
-
-      const existingEmails = users.map((user) => user.email);
-      if (existingEmails.includes(sendData.email)) {
-        setError('このメールアドレスは既に使用されています。別のメールアドレスを入力してください。');
-        return; // Exit the function early if email is already in use
-      }
-
-      // Perform the registration if email is not in use
-      const { error: registrationError } = await supabase.from("users").insert(sendData);
-      if (registrationError) {
-        console.log(registrationError, "insertエラー");
-        setError('登録に失敗しました。もう一度お試しください。');
-      } else {
-        // router.push('/user/login');
-      }
+  
+     
+  
+     
     } catch (error) {
-      console.error('Error during registration:', error);
+      console.error('登録中にエラーが発生しました:', error);
     }
-  }
+  };
+  
 
   return (
     <>
@@ -92,7 +104,8 @@ function Registry() {
                   ユーザーネーム<span className={styles.span}>※</span>
                 </th>
                 <td className={styles.td}>
-                  <input type="text" id="name" placeholder="健康管理" className={styles.inputT}/>                </td>
+                  <input type="text" id="name" name="name" placeholder="健康管理" className={styles.inputT}/>
+                </td>
               </tr>
               <tr className={styles.tr}>
                 <th className={styles.th}>
@@ -100,6 +113,9 @@ function Registry() {
                 </th>
                 <td className={styles.td}>
                   <input type="email" name="email" id="email" placeholder='XXX@nurtrition.com' maxLength={256} className={styles.inputT}/>
+                  {emailError && (
+                    <p><span className={styles.error}>{emailError}</span></p>
+                  )}
                 </td>
               </tr>
               <tr className={styles.tr}>

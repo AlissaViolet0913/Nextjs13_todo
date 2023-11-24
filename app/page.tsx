@@ -14,8 +14,6 @@ export default function Home() {
 
   return (
     <div className={isMenuOpen ? `${styles.container}`: ""}>
-      <TabTitle title='食事管理アプリ' />
-
       <Header isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen}/>
 
     

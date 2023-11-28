@@ -41,9 +41,6 @@
 .main h2 span {
   background: linear-gradient(transparent 60%, rgba(255, 0, 0, 0.9) 60%);
 }
-.main p {
-  color: rgb(183, 183, 183);
-}
 
 .h2B {
   margin-top: 5%;
@@ -197,4 +194,8 @@
   width: 7%;
   height: 4vh;
   margin-left: 2%;
+}
+
+.error {
+  color: red;
 }/*# sourceMappingURL=Registry.module.css.map */

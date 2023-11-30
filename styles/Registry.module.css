@@ -198,4 +198,25 @@
 
 .error {
   color: red;
+}
+
+.disableBtn {
+  background-color: grey;
+  border: none;
+}
+.disableBtn:hover {
+  background-color: grey;
+  color: white;
+  border: none;
+}
+
+.errorMain {
+  background-color: rgb(192, 192, 192);
+  margin-right: 20%;
+  margin-left: 20%;
+  margin-top: 10%;
+  margin-bottom: 10%;
+  text-align: center;
+  padding-top: 10%;
+  padding-bottom: 10%;
 }/*# sourceMappingURL=Registry.module.css.map */

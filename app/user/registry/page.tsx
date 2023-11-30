@@ -4,15 +4,16 @@ import React, { ReactNode, useEffect, useState } from 'react'
 import styles from '../../../styles/Registry.module.css';
 import { supabase } from "../../api/supabase.js"
 import { useForm } from "react-hook-form";
+import { useRouter } from 'next/navigation'; //import元が変わった
 
-// import { useRouter } from 'next/router';
 
 function Registry() {
   const [displayPassword, setDisplayPassword] = useState(false);
   const [emailError, setEmailError] = useState("");
   const [usersMail, setUsersMail] = useState<string[]>([]);
-  
+  const router = useRouter();
 
+  
 
   useEffect(() => {
     const emailCheck = async () => {
@@ -21,11 +22,8 @@ function Registry() {
         if (error) {
           console.log(error, "データ取得に失敗しました");
         } else {
-          console.log(users);
-           //メールアドレスを抜き出してstateに保存
-           const mail: any[] = users.map((user) => user.email);
-           setUsersMail(mail);
-
+          const mail: any[] = users.map((user) => user.email);
+          setUsersMail(mail);
         }
       } catch (error) {
         if (error instanceof Error) {
@@ -42,10 +40,9 @@ function Registry() {
     handleSubmit,
     formState: { errors, isValid, isSubmitting },
   } = useForm({
+    // 変更が行われた時点でバリデーションを行う
     mode: "onChange",
   });
-
-  
 
   // passwordの表示・非表示
   const displayPass = () => {
@@ -54,24 +51,32 @@ function Registry() {
   
   // 新規会員登録
   const onSubmit = async (sendData: any) => { 
-    console.log("onSubmit 関数が呼ばれました");
-   
+
         //送信するデータを成形
+        delete sendData.passwordConfirmation;        
         if(sendData.gender === "male"){
           sendData.gender = "男性"
         } else if(sendData.gender === "female"){
           sendData.gender = "女性"
         }
 
-        console.log(sendData);
-
-  
-        // usersテーブルに追加
-        const { error: registrationError } = await supabase.from("users").insert(sendData);
-        if (registrationError) {
-          console.log(registrationError, "insertエラー");
+        const { data: users, error } = await supabase.from("users").select('email');
+        if (error) {
+          console.log(error, "データ取得に失敗しました");
         } else {
-          console.log("データ登録完了")
+           const mail: any[] = users.map((user) => user.email);
+           if(mail.includes(sendData.email)){
+             // 入力時にはメアド重複なく送信時に重複した場合、エラー画面へ遷移させる
+            router.push('./error');
+          } else {
+            // usersテーブルに追加
+            const { error: registrationError } = await supabase.from("users").insert(sendData);
+            if (registrationError) {
+              console.log(registrationError, "insertエラー");
+            } else {
+              console.log("データ登録完了")
+            }
+           }
         }
   };
   
@@ -93,7 +98,16 @@ function Registry() {
                   ユーザーネーム<span className={styles.span}>※</span>
                 </th>
                 <td className={styles.td}>
-                  <input type="text" id="name" name="name" placeholder="健康管理" className={styles.inputT} onSubmit={onSubmit} />
+                  <input type="text" id="name" placeholder="健康管理" className={styles.inputT} onSubmit={onSubmit}
+                  {...register("name", { 
+                    required: "ユーザーネームは必須項目です",
+                    validate: {
+                    noSpace: (value) => !/\s/.test(value) || "スペース文字は使用できません",
+                    noSpecialCharacters: (value) => /^[ぁ-んァ-ン一-龯a-zA-Z0-9]+$/.test(value) || "特殊文字は使用できません",
+                    }, })} />
+                    <p className={styles.error}>
+                      {errors.name?.message as ReactNode}
+                    </p>     
                 </td>
               </tr>
               <tr className={styles.tr}>
@@ -140,22 +154,17 @@ function Registry() {
                   minLength={8}
                   className={styles.inputT}
                   onSubmit={onSubmit}
-                  {...register("mailAddress", {
-                    validate: {
-                      mailCheck: (value) => {
-                        const mailCheck = usersMail.filter(
-                          (mail) => mail === value,
-                        );
-                        return (
-                          mailCheck.length === 0 ||
-                          "このメールアドレスは登録済です"
-                        );
-                      },
+                  {...register("password", {
+                    required: "パスワードは必須項目です",
+                    minLength: {
+                      value: 8,
+                      message: "8文字以上で入力してください",
                     },
                     pattern: {
                       value:
-                        /^[a-zA-Z0-9_.+-]+@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/,
-                      message: "正しいメールアドレスを入力してください",
+                        /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)[a-zA-Z\d]+$/,
+                      message:
+                        "半角英大文字、半角英小文字、数字をそれぞれ1種類以上含んでください",
                     },
                   })}
                 />
@@ -169,6 +178,7 @@ function Registry() {
                   className={styles.inputT}
                   onSubmit={onSubmit}
                   {...register("password", {
+                    required: "パスワードは必須項目です",
                     minLength: {
                       value: 8,
                       message: "8文字以上で入力してください",
@@ -199,21 +209,17 @@ function Registry() {
                 確認パスワード<span className={styles.span}>※</span>
                 </th>
                 <td className={styles.td}>
-                  <input type="password" id="passwordConfirmation" placeholder='********' maxLength={16} minLength={8} className={styles.inputT}  {...register("conPw", {
-                          validate: {
-                            matchesPreviousPassword: (value) => {
-                              const { password } = getValues();
-                              return (
-                                password !== value || "パスワードと一致しません"
-                              );
-                            },
-                          },
-                          required: "確認パスワードは必須項目です",
-                        })}/>
+                  <input type="password" id="passwordConfirmation" placeholder='********' maxLength={16} minLength={8} className={styles.inputT}  {...register("passwordConfirmation", {
+                    required: "確認パスワードは必須項目です",
+                    validate: {
+                      matchesPreviousPassword: (value) =>
+                      value === getValues("password") || "パスワードと一致しません",
+                    },
+                    })}/>
                   <p>入力したパスワードと同じものを入力してください
                   </p>
                   <p className={styles.error}>
-                        {errors.conPw?.message as ReactNode}
+                        {errors.passwordConfirmation?.message as ReactNode}
                       </p>
                 </td>
               </tr>
@@ -250,6 +256,7 @@ function Registry() {
                 <td className={styles.td}>
                   <input type="text"  id="birthday" placeholder='19990625' maxLength={8} minLength={8} className={styles.inputT} onSubmit={onSubmit}
                   {...register("birthday", {
+                    required: "生年月日は必須項目です",
                     minLength: {
                       value: 8,
                       message: "8桁以上で入力してください",
@@ -285,7 +292,22 @@ function Registry() {
               </tr>
             </tbody>
             </table>
-        <button type="submit" className={styles.btn}>登録する</button>
+            <button
+            type="submit"
+            // isSubmitting: フォーム送信が完了するまでの間trueになる
+            // 送信中の状態でボタンを無効化 
+            // registerが設定されているところに検証エラーがなければ！isValidがfalseになり表示される。
+            disabled={!isValid || isSubmitting}
+            className={`${styles.btn} ${(!isValid || isSubmitting) ? styles.disableBtn : ""}`}>
+              登録する
+            </button>
+            {
+              (!isValid || isSubmitting) ?
+              <p className={styles.error}>
+                未入力項目があります、全て入力してください。
+              </p>
+              :""
+            }
       </form>
     </div>
     </>

@@ -1,5 +1,5 @@
 {
-  "name": "nurtrition",
+  "name": "first",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,12 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@types/node": "20.9.0",
-    "@types/react": "18.2.37",
-    "@types/react-dom": "18.2.15",
+    "@supabase/supabase-js": "^2.38.5",
+    "install": "^0.13.0",
     "next": "14.0.2",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "typescript": "5.2.2"
+    "react": "^18",
+    "react-dom": "^18",
+    "react-hook-form": "^7.48.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "typescript": "^5"
   }
 }

@@ -1,0 +1,222 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=BIZ+UDPGothic&family=M+PLUS+1p:wght@300;400&family=Noto+Serif+JP:wght@300&family=Poppins:wght@100&family=Zen+Kaku+Gothic+New:wght@300;400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=BIZ+UDPGothic&family=M+PLUS+1p:wght@300;400&family=Noto+Serif+JP:wght@300&family=Poppins:wght@100&family=Zen+Kaku+Gothic+New&display=swap");
+.bg {
+  background-image: url("../public/bg.png");
+  margin-top: 0;
+  background-size: cover;
+  background-attachment: fixed;
+  padding-top: 4%;
+  padding-bottom: 7%;
+}
+
+.main {
+  text-align: center;
+  background-color: rgb(238, 238, 238);
+  width: 50%;
+  margin: auto;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  z-index: 1000;
+  padding-left: 2%;
+  font-family: "BIZ UDPGothic", sans-serif;
+  border-radius: 4px;
+  color: rgb(60, 60, 60);
+}
+.main h1 {
+  margin-bottom: 5%;
+  margin-left: 2%;
+  margin-top: 1%;
+  font-size: 2.5rem;
+  text-align: left;
+}
+.main h2 {
+  text-align: left;
+  position: relative;
+  color: black;
+  margin-left: 50px;
+  margin-bottom: 1%;
+  font-size: 2rem;
+}
+.main h2 span {
+  background: linear-gradient(transparent 60%, rgba(255, 0, 0, 0.9) 60%);
+}
+
+.h2B {
+  margin-top: 5%;
+}
+
+.PhyP {
+  text-align: left;
+  margin-left: 7%;
+  margin-bottom: 3%;
+  font-size: 18px;
+}
+
+.tr {
+  margin-bottom: 10v;
+  height: 10vh;
+  border: 1px solid #cecece !important;
+  margin-bottom: 10px; /* 適切なマージンを追加して間隔を調整 */
+}
+
+.th {
+  text-align: left;
+}
+.th span {
+  color: red;
+  margin-left: 1%;
+}
+
+.td {
+  text-align: left;
+  width: 70%;
+}
+.td .inputT {
+  height: 4vh;
+  width: 50%;
+  background-color: .td .inputT white;
+  border: 1px solid rgb(67, 67, 67);
+  border-radius: 6px;
+  padding-left: 1em;
+  padding-right: 1em;
+  font-size: 22px;
+  color: black;
+}
+.td .inputT:hover {
+  border: 2px solid rgb(134, 132, 132);
+}
+.td .inputT:focus {
+  outline: 4px solid rgb(103, 103, 103);
+  border: none;
+}
+.td .inputN {
+  height: 4vh;
+  width: 15%;
+  background-color: .td .inputN white;
+  border: 1px solid rgb(67, 67, 67);
+  border-radius: 6px;
+  padding-left: 1em;
+  padding-right: 1em;
+  font-size: 22px;
+  margin-right: 1.5%;
+  color: black;
+}
+.td .inputN:hover {
+  border: 2px solid rgb(134, 132, 132);
+}
+.td .inputN:focus {
+  outline: 4px solid rgb(103, 103, 103);
+  border: none;
+}
+.td p {
+  font-size: 18px;
+  margin-top: 1%;
+}
+
+.vertical {
+  display: flex;
+  flex-direction: column;
+}
+.vertical label {
+  display: flex;
+  align-items: center;
+  gap: 0 0.5em;
+  position: relative;
+  cursor: pointer;
+}
+.vertical label::before, .vertical label:has(:checked)::after {
+  border-radius: 3px;
+  content: "";
+}
+.vertical label::before {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgb(98, 98, 98);
+  box-sizing: border-box;
+}
+.vertical label::after {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  background-color: rgb(98, 98, 98);
+}
+.vertical label:has(:checked)::after {
+  background-color: red;
+  animation: anim-radio-002 0.3s linear;
+}
+@keyframes anim-radio-002 {
+  0% {
+    box-shadow: 0 0 0 1px transparent;
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(208, 37, 37, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 0 10px transparent;
+  }
+}
+.vertical label input {
+  display: none;
+}
+
+.table {
+  margin: auto;
+  width: 80%;
+  font-size: 1.5rem;
+}
+
+.btn {
+  cursor: pointer;
+  background-color: black;
+  color: white;
+  outline: none;
+  border: solid white;
+  margin-top: 7%;
+  margin-bottom: 3%;
+  width: 30%;
+  height: 6vh;
+  font-size: 1.5rem;
+  font-family: "BIZ UDPGothic", sans-serif;
+  transition: all 0.3s;
+}
+.btn:hover {
+  background-color: rgb(247, 244, 244);
+  border: solid black;
+  color: black;
+}
+
+.passwordVisible {
+  cursor: pointer;
+  width: 7%;
+  height: 4vh;
+  margin-left: 2%;
+}
+
+.error {
+  color: red;
+}
+
+.disableBtn {
+  background-color: grey;
+  border: none;
+}
+.disableBtn:hover {
+  background-color: grey;
+  color: white;
+  border: none;
+}
+
+.errorMain {
+  background-color: rgb(192, 192, 192);
+  margin-right: 20%;
+  margin-left: 20%;
+  margin-top: 10%;
+  margin-bottom: 10%;
+  text-align: center;
+  padding-top: 10%;
+  padding-bottom: 10%;
+}/*# sourceMappingURL=Registry.module.css.map */

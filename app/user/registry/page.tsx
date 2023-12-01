@@ -9,7 +9,6 @@ import { useRouter } from 'next/navigation'; //import元が変わった
 
 function Registry() {
   const [displayPassword, setDisplayPassword] = useState(false);
-  const [emailError, setEmailError] = useState("");
   const [usersMail, setUsersMail] = useState<string[]>([]);
   const router = useRouter();
 

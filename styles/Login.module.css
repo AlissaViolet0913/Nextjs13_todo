@@ -1,0 +1,71 @@
+.main {
+  height: 90vh;
+  margin-left: 20%;
+  margin-right: 20%;
+  margin-top: 7vh;
+  padding: 60px 60px;
+  background: url(https://picsum.photos/id/1004/5616/3744) no-repeat center center #505050;
+  background-size: cover;
+  box-shadow: 0px 30px 60px -5px #000;
+}
+
+.flex {
+  height: 50vh;
+  padding-top: 80px;
+}
+
+.flex2 {
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  border: none;
+  width: 89%;
+  padding: 1vh 2vh;
+  display: block;
+  height: 4vh;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0);
+  overflow: hidden;
+  margin-top: 15px;
+  margin-bottom: 6vh;
+  transition: all 0.5s ease-in-out;
+  display: inline-block;
+  font-size: 1.5rem;
+}
+.input:focus {
+  outline: 0;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0);
+}
+
+.span {
+  margin-left: 20px;
+  font-family: "Montserrat", sans-serif;
+  color: #fff;
+}
+
+.btn {
+  background-color: #1161ed;
+  color: #FFF;
+  width: 89%;
+  padding: 10px 20px;
+  display: block;
+  height: 39px;
+  border-radius: 20px;
+  margin-top: 30px;
+  transition: all 0.5s ease-in-out;
+  border: none;
+  text-transform: uppercase;
+}
+.btn:hover {
+  background: #4082f5;
+  box-shadow: 0px 4px 35px -5px #4082f5;
+  cursor: pointer;
+}
+.btn:focus {
+  outline: none;
+}/*# sourceMappingURL=Login.module.css.map */

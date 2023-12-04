@@ -9,7 +9,6 @@ import { useRouter } from 'next/navigation'; //import元が変わった
 
 function Registry() {
   const [displayPassword, setDisplayPassword] = useState(false);
-  const [emailError, setEmailError] = useState("");
   const [usersMail, setUsersMail] = useState<string[]>([]);
   const router = useRouter();
 
@@ -304,7 +303,7 @@ function Registry() {
             {
               (!isValid || isSubmitting) ?
               <p className={styles.error}>
-                未入力項目があります、全て入力してください。
+                未入力項目があります、全て入力してください
               </p>
               :""
             }

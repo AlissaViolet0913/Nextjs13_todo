@@ -19,11 +19,11 @@ export default function Home() {
     
       <main className={styles.main}>
         <h1 className={styles.title}>
-          毎日の<a href="https://nextjs.org">食事健康管理</a>
+          毎日の<a href="https://nextjs.org">TODO管理</a>
         </h1>
 
         <p className={styles.description}>
-          食事の記録を始めましょう
+          やることリストを作りましょう
         </p>
       </main>
 

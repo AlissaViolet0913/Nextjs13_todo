@@ -1,4 +1,5 @@
 $btnC: #b61a01;
+$cWhite: white;
 
 
 .main{
@@ -11,7 +12,6 @@ $btnC: #b61a01;
     box-shadow: 0px 30px 60px -5px #000;
     border-radius: 10px;
 }
-
 
 
 .logo{
@@ -53,7 +53,6 @@ $btnC: #b61a01;
     border: 2px solid rgba(255, 255, 255, 0);
     overflow: hidden;
     margin-top: 15px;
-    margin-bottom: 6vh;
     transition: all 0.5s ease-in-out;
     display: inline-block;
     font-size: 1.5rem;
@@ -71,7 +70,6 @@ $btnC: #b61a01;
     margin-left: 20%;
     font-family: 'Montserrat', sans-serif;
     color: #fff;
-
 }
 
 .centeredButton {
@@ -103,4 +101,25 @@ $btnC: #b61a01;
   &:focus{
     outline: none;
   }
+}
+
+.error{
+  color:red;
+  margin-top: 2vh;
+  text-align: center;
+  margin-bottom: 3vh;
+}
+
+.link{
+  text-decoration: none;
+  color: $cWhite;
+
+  &:hover{
+    text-decoration:underline;
+  }
+}
+
+.linkBox{
+  text-align: right;
+  margin-top: 2vh;
 }

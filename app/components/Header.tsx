@@ -35,7 +35,7 @@ function Header({ isMenuOpen, setIsMenuOpen }: HeaderProps) {
         </div>
         <nav className={isMenuOpen? `${styles.nav} ${styles.open}` : styles.nav}>
           <ul>
-          <a href='' className={styles.link}><li>食事を記録する</li></a>
+          <a href='' className={styles.link}><li>TODOリスト</li></a>
             <a href='' className={styles.link}><li>マイページ</li></a>
             <a href='' className={styles.link}><li>お問い合わせ</li></a>
             <a href='/user/login' className={styles.link}><li>ログアウト</li></a>

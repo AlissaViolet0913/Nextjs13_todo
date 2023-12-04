@@ -303,7 +303,7 @@ function Registry() {
             {
               (!isValid || isSubmitting) ?
               <p className={styles.error}>
-                未入力項目があります、全て入力してください。
+                未入力項目があります、全て入力してください
               </p>
               :""
             }

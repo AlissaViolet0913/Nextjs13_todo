@@ -1,7 +1,11 @@
-import React, { useState } from 'react'
+"use client";
+
+import React, { useEffect, useState } from 'react'
 import styles from "../../styles/Header.module.css"
 import Link from 'next/link';
-
+import GetCookieId from './cookie/GetCookieId';
+import { supabase } from '../api/supabase';
+import { useRouter } from 'next/navigation';
 
 interface HeaderProps {
   isMenuOpen: boolean;
@@ -9,22 +13,74 @@ interface HeaderProps {
 }
 
 function Header({ isMenuOpen, setIsMenuOpen }: HeaderProps) {
-  // メニューボタンのクリックを処理する関数
-  const menuOpen = () => {
+  const[name, setName] = useState("");;
+  const id = GetCookieId();
+  const router = useRouter();
+
+
+  useEffect(()=>{
+    const fetchUserName = async()=>{
+      if(id){
+        const{data, error} = await supabase
+        .from("users")
+        .select("*")
+        .eq("id", id)
+        .single();
+
+        if(error){
+          console.log("ログインユーザー情報取得失敗", error.message)
+        }else{
+          setName(data.name);
+        }
+      }
+
+      if(id.length < 0){
+        return null
+      }
+    }
+
+    fetchUserName();
+  },[])
+
+   // メニューボタンのクリックを処理する関数
+   const menuOpen = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const Login = ()=>{
+  // ログアウト処理
+  const logoutHandler = () =>{
+    if(document.cookie !== ""){
+      // id情報等を削除して、有効期限を切らす
+      let expirationDate = new Date("1999-12-31T23:59:59Z");
+      document.cookie = `id=; expires=${expirationDate.toUTCString()}; path=/;`;
+      document.cookie = `loginSt=; expires=${expirationDate.toUTCString()}; path=/;`;
+      alert("ログアウトしました");
+      window.location.reload();
+      return; // ここで関数を終了させる
+    }else{
+      alert("ログインしていません")
+      return;
+    }
   }
+
+  // 「ゲストさん」のときだけログインページに遷移させる
+  const handleNameClick = () => {
+    if (id) {
+     return;
+    } else {
+      alert("ログインしてください");
+      router.push("/user/login");
+    }
+  };
     
   return (
     <div>
      <div className={styles.Header}>
       <div className={styles.loginIcon}>
-     <Link href="/user/login" className={styles.link}>  
-     <img src="./login.png" className={styles.login}/>
-     <div>ゲストさん</div>
-     </Link>
+     <div className={styles.link} onClick={handleNameClick}>  
+      <img src="./login.png" className={styles.login}/>
+      <div>{name ? `${name}さん` : 'ゲストさん'}</div>
+     </div>
       </div>
     {/* Hamburgerメニュー */}
       <div className={isMenuOpen ? `${styles.hamburgerMenu} ${styles.menuOpen}` : styles.hamburgerMenu}>
@@ -35,10 +91,10 @@ function Header({ isMenuOpen, setIsMenuOpen }: HeaderProps) {
         </div>
         <nav className={isMenuOpen? `${styles.nav} ${styles.open}` : styles.nav}>
           <ul>
-          <a href='' className={styles.link}><li>TODOリスト</li></a>
+            <a href='' className={styles.link}><li>TODOリスト</li></a>
             <a href='' className={styles.link}><li>マイページ</li></a>
             <a href='' className={styles.link}><li>お問い合わせ</li></a>
-            <a href='/user/login' className={styles.link}><li>ログアウト</li></a>
+            <a href='' className={styles.link} onClick={logoutHandler}><li>ログアウト</li></a>
           </ul>
         </nav>
       </div>

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import styles from "../../styles/Header.module.css"
 import Link from 'next/link';
 import GetCookieId from './cookie/GetCookieId';
-import { supabase } from '../api/supabase';
+import { supabase } from '../../supabase';
 import { useRouter } from 'next/navigation';
 
 interface HeaderProps {
@@ -34,8 +34,8 @@ function Header({ isMenuOpen, setIsMenuOpen }: HeaderProps) {
         }
       }
 
-      if(id.length < 0){
-        return null
+      if(!id){
+        return null;
       }
     }
 
@@ -93,7 +93,7 @@ function Header({ isMenuOpen, setIsMenuOpen }: HeaderProps) {
           <ul>
             <a href='' className={styles.link}><li>TODOリスト</li></a>
             <a href='' className={styles.link}><li>マイページ</li></a>
-            <a href='' className={styles.link}><li>お問い合わせ</li></a>
+            <a href='/contact' className={styles.link}><li>お問い合わせ</li></a>
             <a href='' className={styles.link} onClick={logoutHandler}><li>ログアウト</li></a>
           </ul>
         </nav>

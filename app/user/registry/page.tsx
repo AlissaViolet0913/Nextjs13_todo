@@ -2,7 +2,7 @@
 
 import React, { ReactNode, useEffect, useState } from 'react'
 import styles from '../../../styles/Registry.module.css';
-import { supabase } from "../../api/supabase.js"
+import { supabase } from "../../../supabase.js"
 import { useForm } from "react-hook-form";
 import { useRouter } from 'next/navigation'; //import元が変わった
 

@@ -49,7 +49,7 @@ function Login() {
         expirationDate.setDate(expirationDate.getDate() + 1);
 
         // Cookie設定
-        document.cookie = `id=a${userId}fWay2o6iu;  expires=${expirationDate.toUTCString()}; path=/`;
+        document.cookie = `id=${userId};  expires=${expirationDate.toUTCString()}; path=/`;
         document.cookie = `loginSt=true;  expires=${expirationDate.toUTCString()}; path=/`;
 
         router.push("/")

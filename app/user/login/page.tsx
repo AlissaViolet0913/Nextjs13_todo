@@ -4,7 +4,8 @@ import { useRouter } from 'next/navigation';
 import styles from "../../../styles/Login.module.css"
 import React, { ReactNode, useState } from 'react';
 import Link from 'next/link';
-import { supabase } from '@/app/api/supabase';
+import { supabase } from '@/supabase'; 
+// import { supabase } from '@/app/api/supabase';
 import { useForm } from 'react-hook-form';
 
 

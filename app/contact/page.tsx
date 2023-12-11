@@ -22,17 +22,22 @@ function Contact() {
       message: messageRef.current?.value,
     }
 
-    await fetch("/api", {
-      method: "POST",
+    console.log(JSON.stringify(data))
+
+    await fetch("/api/contact", {
+      method: "post",
       headers:{
-        Accept: "application/json, text/plain",
-        "Content-Type" : "application/json"
+        // Accept: "application/json, text/plain",
+        // "Content-Type" : "application/json"
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
       },
       // 何を送るのか
       // JSON化して渡す、ただの文字列だから軽量化できる
 
       body: JSON.stringify(data),
-    }).then((res)=>{
+    }
+    ).then((res)=>{
       if(res.status === 200) console.log("メール送信完了")
     })
   }

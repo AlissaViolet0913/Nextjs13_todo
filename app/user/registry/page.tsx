@@ -52,6 +52,7 @@ function Registry() {
   const onSubmit = async (sendData: any) => { 
 
         //送信するデータを成形
+        // 性別選択項目
         delete sendData.passwordConfirmation;        
         if(sendData.gender === "male"){
           sendData.gender = "男性"
@@ -59,6 +60,15 @@ function Registry() {
           sendData.gender = "女性"
         }
 
+        // 身長・体重項目：未入力時
+        if(sendData.height === ""){
+          sendData.height = null;
+        }
+        if(sendData.weight === ""){
+          sendData.weight = null;
+        }
+
+        // usersテーブルに追加
         const { data: users, error } = await supabase.from("users").select('email');
         if (error) {
           console.log(error, "データ取得に失敗しました");
@@ -66,20 +76,19 @@ function Registry() {
            const mail: any[] = users.map((user) => user.email);
            if(mail.includes(sendData.email)){
              // 入力時にはメアド重複なく送信時に重複した場合、エラー画面へ遷移させる
-            router.push('./error');
+            router.push('/user/registry/error');
           } else {
-            // usersテーブルに追加
             const { error: registrationError } = await supabase.from("users").insert(sendData);
             if (registrationError) {
               console.log(registrationError, "insertエラー");
             } else {
               console.log("データ登録完了")
+              router.push("/user/login")
             }
            }
         }
   };
   
-
   return (
     <>
     <div className={styles.bg}>
@@ -219,7 +228,7 @@ function Registry() {
                   </p>
                   <p className={styles.error}>
                         {errors.passwordConfirmation?.message as ReactNode}
-                      </p>
+                  </p>
                 </td>
               </tr>
             </tbody>
@@ -235,8 +244,23 @@ function Registry() {
                   身長
                 </th>
                 <td className={styles.td}>
-                  <input type="text" name="height" id="height" placeholder='158' maxLength={3} minLength={2} className={styles.inputN}/>cm
+                  <input
+                  type="text"
+                  id="height"
+                  placeholder='158'
+                  maxLength={3}
+                  minLength={2}
+                  className={styles.inputN}
+                  {...register("height", { 
+                    pattern: {
+                      value: /^[0-9]*$/, 
+                      message: "半角数字で入力してください"},
+                  })}
+                  />cm
                   <p>半角数字で入力してください</p>
+                  <p className={styles.error}>
+                        {errors.height?.message as ReactNode}
+                  </p>
                 </td>
               </tr>
               <tr className={styles.tr}>
@@ -244,8 +268,23 @@ function Registry() {
                   体重
                 </th>
                 <td className={styles.td}>
-                  <input type="text" name="weight" id="weight" placeholder='48' maxLength={3} minLength={2} className={styles.inputN}/>kg
+                  <input
+                  type="text"
+                  id="weight"
+                  placeholder='48'
+                  maxLength={3}
+                  minLength={2}
+                  className={styles.inputN}
+                  {...register("weight", { 
+                    pattern: {
+                      value: /^[0-9]*$/, 
+                      message: "半角数字で入力してください"}  
+                  })}
+                  />kg
                   <p>半角数字で入力してください</p>
+                  <p className={styles.error}>
+                        {errors.weight?.message as ReactNode}
+                  </p>
                 </td>
               </tr>
               <tr className={styles.tr}>

@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from 'react'
 import styles from "../../styles/Header.module.css"
-import Link from 'next/link';
 import GetCookieId from './cookie/GetCookieId';
 import { supabase } from '../../supabase';
 import { useRouter } from 'next/navigation';
@@ -13,7 +12,7 @@ interface HeaderProps {
 }
 
 function Header({ isMenuOpen, setIsMenuOpen }: HeaderProps) {
-  const[name, setName] = useState("");;
+  const[name, setName] = useState("");
   const id = GetCookieId();
   const router = useRouter();
 
@@ -72,6 +71,17 @@ function Header({ isMenuOpen, setIsMenuOpen }: HeaderProps) {
       router.push("/user/login");
     }
   };
+
+
+  // ログインしてたら、それぞれの該当ページに遷移させる
+  const handleNavigation = (path: string) => {
+    if (id) {
+      router.push(path); 
+    } else {
+      alert("ログインしてください");
+      router.push("/user/login");
+    }
+  };
     
   return (
     <div>
@@ -91,10 +101,10 @@ function Header({ isMenuOpen, setIsMenuOpen }: HeaderProps) {
         </div>
         <nav className={isMenuOpen? `${styles.nav} ${styles.open}` : styles.nav}>
           <ul>
-            <a href='' className={styles.link}><li>TODOリスト</li></a>
-            <a href='' className={styles.link}><li>マイページ</li></a>
+            <div className={styles.link} onClick={() => handleNavigation('/todo')}><li>TODOリスト</li></div>
+            <div className={styles.link} onClick={() => handleNavigation('/user')}><li>マイページ</li></div>
             <a href='/contact' className={styles.link}><li>お問い合わせ</li></a>
-            <a href='' className={styles.link} onClick={logoutHandler}><li>ログアウト</li></a>
+            <div className={styles.link} onClick={logoutHandler}><li>ログアウト</li></div>
           </ul>
         </nav>
       </div>

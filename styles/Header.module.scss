@@ -72,6 +72,7 @@ $cWhite: white;
     // header画面上部固定
     position: fixed;
     width: 100%;
+    z-index: 1000;
   }
 
   .nav{
@@ -79,7 +80,7 @@ $cWhite: white;
     right: -300vw;
     width: 70%;
     max-width: 400px;
-    height: 70vh;
+    height: 45vh;
     display: block;
     position: fixed;
     align-items: center;

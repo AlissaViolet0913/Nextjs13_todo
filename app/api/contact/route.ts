@@ -1,6 +1,5 @@
 // APIの設定、バックエンド側になる
 import { NextRequest, NextResponse } from "next/server";
-// const nodemailer = require('nodemailer');
 import nodemailer from "nodemailer";
 import getStream from 'get-stream';
 

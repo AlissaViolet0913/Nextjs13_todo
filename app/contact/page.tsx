@@ -4,7 +4,6 @@ import React, { useRef } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Contact() {
-
   const nameRef = useRef<HTMLInputElement>(null); //<>:ジェネリクス型（型の変数）HTMLInputElement:タグの属性
   const emailRef = useRef<HTMLInputElement>(null); 
   const messageRef = useRef<HTMLTextAreaElement>(null); 

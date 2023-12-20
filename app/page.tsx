@@ -22,7 +22,7 @@ export default function Home() {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           console.log('Adding active class:', entry.target);
-
+          
           entry.target.classList.add("active");
         } else {
           entry.target.classList.remove("active");
@@ -36,6 +36,7 @@ export default function Home() {
       observer.observe(titleMessage);
     }
 
+    // 偶数か奇数かで表示する位置を変える
     imagesItems.forEach((item, index) => {
       const divItem = item as HTMLDivElement;
       const childElement = divItem.children[0] as HTMLDivElement;
@@ -56,9 +57,9 @@ export default function Home() {
     }
 
     // Cleanup function
-    // return () => {
-    //   observer.disconnect();
-    // };
+    return () => {
+      observer.disconnect();
+    };
   }, []); // Empty dependency array ensures useEffect runs only once
 
   return (

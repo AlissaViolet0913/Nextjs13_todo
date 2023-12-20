@@ -1,20 +1,39 @@
 "use client";
 
 import React, { ReactNode, useEffect, useState } from 'react'
-import styles from '../../../styles/Registry.module.css';
-import { supabase } from "../../../supabase.js"
+import styles from '../../styles/Registry.module.css';
+import { supabase } from '@/supabase'; 
 import { useForm } from "react-hook-form";
-import { useRouter } from 'next/navigation'; //import元が変わった
+import GetCookieId from '../components/cookie/GetCookieId';
+import Header from '../components/Header'
 
 
-function Registry() {
+function User() {
   const [displayPassword, setDisplayPassword] = useState(false);
   const [usersMail, setUsersMail] = useState<string[]>([]);
-  const router = useRouter();
-
-  
+  const [loginEmail, setLoginEmail] = useState("");
+  const [userData, setUserData] = useState<any>();
+  const [radio, setRadio] = useState();
+  const loginId = GetCookieId();
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   useEffect(() => {
+    // ログインユーザーのEmailを取得
+    const getEmail = async () => {
+      const { data: userEmail } = await supabase
+        .from("users")
+        .select("email")
+        .eq("id", loginId);
+  
+      if (userEmail && userEmail.length > 0) {
+        const firstUser = userEmail[0];
+        const email = firstUser.email;
+        setLoginEmail(email);
+      }
+    };
+  
+    getEmail();
+
     const emailCheck = async () => {
       try {
         const { data: users, error } = await supabase.from("users").select('email');
@@ -23,6 +42,10 @@ function Registry() {
         } else {
           const mail: any[] = users.map((user) => user.email);
           setUsersMail(mail);
+
+           // Email一覧情報からログインしているユーザーのものを削除
+          const filteredMail = mail.filter((email) => email !== loginEmail);
+          setUsersMail(filteredMail);
         }
       } catch (error) {
         if (error instanceof Error) {
@@ -31,34 +54,74 @@ function Registry() {
       }
     }
     emailCheck();
-  }, []); 
-  
+  }, [loginId, loginEmail]);
+
+  //ReactHookFormで使用
   const {
     register,
-    getValues,
+    setValue, //手動設定
+    getValues, //現在の値を取得
     handleSubmit,
+    trigger,
     formState: { errors, isValid, isSubmitting },
   } = useForm({
-    // 変更が行われた時点でバリデーションを行う
-    mode: "onChange",
+      // 変更が行われた時点でバリデーションを行う
+      mode: "onChange",
   });
 
+  // パスワードが変更されたら、passwordConfirmation のバリデーションを再評価
+useEffect(() => {
+  trigger("passwordConfirmation"); // 特定のフィールドのバリデーションをトリガー
+}, [getValues("password"), trigger]);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const { data: user } = await supabase
+          .from("users")
+          .select('*')
+          .eq('id', loginId)
+          .single();
+          
+          if (user) {
+          setUserData(user);
+          setValue("name", user.name);
+          setValue("email", user.email);
+          setRadio(user.gender);
+          setValue("password", user.password);
+          setValue("passwordConfirmation", user.password);
+          setValue("height", user.height || "");
+          setValue("weight", user.weight || "");
+          setValue("birthday", user.birthday);
+        } else {
+          console.error("User data not found.");
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", (error as any).message);
+      }
+    };
+
+    fetchUserData();
+  }, [loginId]);
+    
   // passwordの表示・非表示
   const displayPass = () => {
     setDisplayPassword(!displayPassword);
   };
   
   // 新規会員登録
-  const onSubmit = async (sendData: any) => { 
+  const onSubmit = async (sendData: any) => {
 
         //送信するデータを成形
+        delete sendData.passwordConfirmation; 
+    
         // 性別選択項目
         delete sendData.passwordConfirmation;        
         if(sendData.gender === "male"){
           sendData.gender = "男性"
         } else if(sendData.gender === "female"){
           sendData.gender = "女性"
-        }
+        }       
 
         // 身長・体重項目：未入力時
         if(sendData.height === ""){
@@ -68,51 +131,49 @@ function Registry() {
           sendData.weight = null;
         }
 
-        // usersテーブルに追加
-        const { data: users, error } = await supabase.from("users").select('email');
-        if (error) {
-          console.log(error, "データ取得に失敗しました");
+    // usersテーブルの情報を更新
+        const { error: usersError } = await supabase
+        .from('users')
+        .update(sendData)
+        .eq("id", loginId);
+
+        if (usersError) {
+          console.log(usersError, "insertUsersエラー");
         } else {
-           const mail: any[] = users.map((user) => user.email);
-           if(mail.includes(sendData.email)){
-             // 入力時にはメアド重複なく送信時に重複した場合、エラー画面へ遷移させる
-            router.push('/user/registry/error');
-          } else {
-            const { error: registrationError } = await supabase.from("users").insert(sendData);
-            if (registrationError) {
-              console.log(registrationError, "insertエラー");
-            } else {
-              console.log("データ登録完了")
-              router.push("/user/login")
-            }
-           }
+          window.location.reload();
         }
-  };
+
+    };
   
   return (
-    <>
+    <div className={isMenuOpen ? `${styles.container}`: ""}>
+          <Header isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen}/>
+
     <div className={styles.bg}>
     <form className={styles.main} onSubmit={handleSubmit(onSubmit)}>
-        <h1>会員登録</h1>
+        <h1>アカウント情報</h1>
           <h2 ><span>ユーザー情報</span>
             </h2>
           <table className={styles.table}>
             <tbody className={styles.userInfo}>
-              {/* tr: table row */}
-              {/* th: table header */}
-              {/* td: tabel data */}
               <tr className={styles.tr}>
                 <th className={styles.th}>
                   ユーザーネーム<span className={styles.span}>※</span>
                 </th>
                 <td className={styles.td}>
-                  <input type="text" id="name" placeholder="健康管理" className={styles.inputT} onSubmit={onSubmit}
+                  <input 
+                  type="text"
+                  id="name"
+                  placeholder="健康管理"
+                  className={styles.inputT}
+                  onSubmit={onSubmit}
                   {...register("name", { 
                     required: "ユーザーネームは必須項目です",
                     validate: {
                     noSpace: (value) => !/\s/.test(value) || "スペース文字は使用できません",
                     noSpecialCharacters: (value) => /^[ぁ-んァ-ン一-龯a-zA-Z0-9]+$/.test(value) || "特殊文字・全角数字は使用できません",
-                    }, })} />
+                    },              
+                    })} />
                     <p className={styles.error}>
                       {errors.name?.message as ReactNode}
                     </p>     
@@ -205,7 +266,6 @@ function Registry() {
               ) : (
                 <img src="../visible.png" alt="表示" className={styles.passwordVisible} onClick={displayPass}/>
               )}                  
-              {/* <button id="btn_passview" onClick={displayPass}>表示</button> */}
                   <p>半角英大文字・小文字、数字をそれぞれ1文字以上含めて8文字以上16字以内で設定してください</p>
                   <p className={styles.error}>
                         {errors.password?.message as ReactNode}
@@ -236,7 +296,7 @@ function Registry() {
 
             <h2 className={styles.h2B}><span>身体情報</span>
             </h2>
-            <p className={styles.PhyP}>基礎代謝を計算するために必要となる情報です。　身長・体重は会員登録後にマイページから登録・編集も可能です。</p>
+            <p className={styles.PhyP}>基礎代謝を計算するために必要となる情報です。</p>
             <table className={styles.table}>
             <tbody className={styles.PhysicalInfo}>
             <tr className={styles.tr}>
@@ -292,20 +352,17 @@ function Registry() {
                   生年月日<span className={styles.span}>※</span>
                 </th>
                 <td className={styles.td}>
-                  <input type="text"  id="birthday" placeholder='19990625' maxLength={8} minLength={8} className={styles.inputT} onSubmit={onSubmit}
-                  {...register("birthday", {
-                    required: "生年月日は必須項目です",
-                    minLength: {
-                      value: 8,
-                      message: "8桁以上で入力してください",
-                    },
-                    pattern: {
-                      value: /^[0-9]{8}$/,
-                      message:
-                        "半角数字で入力してください",
-                    },
-                  })}/>
-                  <p>半角数字8桁で入力してください</p>
+                  <input 
+                  type="text"  
+                  disabled
+                  id="birthday" 
+                  placeholder='19990625'
+                  maxLength={8} 
+                  minLength={8} 
+                  className={styles.inputT} 
+                  onSubmit={onSubmit}
+                  {...register("birthday", {})}/>
+                  <p>⚠️変更できません</p>
                   <p className={styles.error}>
                   {errors.birthday?.message as ReactNode}
 
@@ -320,36 +377,38 @@ function Registry() {
                   <div className={styles.vertical}>
                     {/* name="gender"を設定することでどちらかしか選択できないようにする */}
                     <label htmlFor="male">
-                      <input type="radio" id="male" value="male" {...register("gender", {})} />男性
+                      <input
+                      type="radio"
+                      disabled 
+                      id="male"
+                      value="male"
+                      {...register("gender", {})} 
+                      checked={radio === '男性'}                      />男性
                     </label>
                     <label htmlFor="female">
-                      <input type="radio" id="female" value="female" {...register("gender", {})}/>女性
+                      <input 
+                      type="radio" 
+                      disabled 
+                      id="female" 
+                      value="female" {...register("gender", {})}
+                      checked={radio === '女性'}                      />女性
                     </label>
                   </div>
+                  <p>⚠️変更できません</p>
                 </td>
               </tr>
             </tbody>
             </table>
             <button
             type="submit"
-            // isSubmitting: フォーム送信が完了するまでの間trueになる
-            // 送信中の状態でボタンを無効化 
-            // registerが設定されているところに検証エラーがなければ！isValidがfalseになり表示される。
             disabled={!isValid || isSubmitting}
             className={`${styles.btn} ${(!isValid || isSubmitting) ? styles.disableBtn : ""}`}>
-              登録する
+              編集完了
             </button>
-            {
-              (!isValid || isSubmitting) ?
-              <p className={styles.error}>
-                未入力項目があります、全て入力してください
-              </p>
-              :""
-            }
       </form>
     </div>
-    </>
+    </div>
   )
 }
 
-export default Registry
+export default User

@@ -1,0 +1,92 @@
+$cWhite: rgb(244, 244, 244);
+
+
+.main{
+    height: 100vh;
+    padding-top: 20vh;
+    padding-bottom: 20vh;
+    display: flex;
+    flex-direction: column; //縦並び
+    background-color: rgb(211, 211, 211);
+    align-items: center;
+
+    & > h1{
+        color: rgb(81, 80, 80);
+        font-size: 4rem;
+        font-weight: bold;
+
+        & > span{
+            color:red;
+        }
+    }
+}
+
+.contents{
+    width: 100%;
+    max-width: 700px;
+    margin-top: 50px;
+}
+
+.content{
+    background-color: $cWhite;
+    width: 100%;
+    border-radius: 1vh;
+    padding: 5%;
+    box-shadow: 0px 10px 15px -10px;
+}
+
+// AddTask.tsxs
+.form{
+    margin: 1vh;
+
+    & > input{
+        background-color: $cWhite;
+        width: 100%; /*親要素いっぱい広げる*/
+        height: 5vh;
+        padding: 10px 15px; 
+        font-size: 23px;
+        border-radius: 4px; 
+        border: 4px solid #ddd; 
+        box-sizing: border-box; 
+        margin-bottom: 1vh;
+    
+        &:focus{
+            outline: 0;
+            border: 4px solid #a3a2a2; 
+            box-shadow: 0 0 5px 0 #a3a2a2;
+        }
+    }
+}
+
+.button{
+    width: 100%;
+    height: 4vh;
+    padding: 4px;
+    margin-bottom: 2vh;
+    color: white;
+    border: 0;
+    font-size: 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: rgb(215, 31, 31);
+}
+
+// TodoList.tsxs
+.li{
+    display: flex;
+    justify-content: space-between;
+    border-left: solid 4px  rgb(215, 31, 31);
+    padding: 2vh;
+    margin-bottom: 1vh;
+    font-size: 20px;
+    box-shadow: 1px 5px 10px -10px;
+    border-radius: 4px;
+}
+
+.delete{
+    color: rgb(51, 51, 219);
+    border: 0;
+    font-size: 20px;
+    cursor: pointer;
+    
+}
